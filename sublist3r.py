@@ -1,4 +1,4 @@
-from tools.Sublist3r import sublist3r
+from tools.Sublistr import sublist3r
 import os
 
 def sublist3r_run(domain,subbrute):
