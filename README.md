@@ -16,8 +16,8 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * Generate a quick HTML report.
 
 ## Requirements:
-* apt-get update
-* apt install python3-pip
+* sudo apt-get update
+* sudo apt install python3-pip
 * sudo apt-get install nmap
 * pip3 install builtwith
 * pip3 install python-nmap
