@@ -24,6 +24,11 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * pip3 install BeautifulSoup4 (On some systems, you need to install this first "sudo apt-get install python-bs4")
 * pip3 install selenium
 
+## Usage:
+cd XDomain
+chmod -R +x tools/
+python3 XDomain.py wikihak.com
+
 ## Screenshots:
 ![alt text](https://wikihak.com/wp-content/uploads/1.JPG)
 
