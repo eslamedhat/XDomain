@@ -39,6 +39,8 @@ python3 XDomain.py wikihak.com
 
 ![alt text](https://wikihak.com/wp-content/uploads/3.JPG)
 
+All the founded domains will be in "targets.txt".
+All the live hosts will be in "live.txt".
 In the conf.py, you will be able to control the used tools and the Nmap ports. 
 
 I was working on a bigger tool, but I didn't have time to continue it. I will try to add more stuff in the future. 
