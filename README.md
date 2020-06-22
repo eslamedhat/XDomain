@@ -15,6 +15,13 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * Nmap scan against every subdomain.
 * Generate a quick HTML report.
 
+## Screenshots:
+![alt text](https://wikihak.com/wp-content/uploads/1.JPG)
+
+![alt text](https://wikihak.com/wp-content/uploads/2.JPG)
+
+![alt text](https://wikihak.com/wp-content/uploads/3.JPG)
+
 In the conf.py, you will be able to control the used tools and the Nmap ports. 
 
 I was working on a bigger tool, but I didn't have time to continue it. I will try to add more stuff in the future. 
