@@ -1,0 +1,14 @@
+www.onetech.ai
+
+api-core.onetech.ai
+
+blog.onetech.ai
+
+developers.onetech.ai
+
+renesas.onetech.ai
+
+resources.onetech.ai
+
+stg-vr.onetech.ai
+
