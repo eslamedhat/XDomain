@@ -15,6 +15,14 @@ I made this tool based on different tools and my own code. XDomain will do the f
 * Nmap scan against every subdomain.
 * Generate a quick HTML report.
 
-I was working on a bigger tool, but I didn't have time to continue it. I will try to add more stuff in the future. 
-Please let me know your suggestions. Enjoy! :D 
+In the conf.py, you will be able to control the used tools and the Nmap ports. 
 
+I was working on a bigger tool, but I didn't have time to continue it. I will try to add more stuff in the future. 
+
+Things that might be added in the future:
+* Auto directory/file bruteforce.
+* waybackurls
+* Auto crawler.
+* Auto scanner for different type of vulnerabilities.
+
+Please let me know your suggestions. Enjoy! :D 
