@@ -21,7 +21,7 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * pip3 install builtwith
 * pip3 install python-nmap
 * pip3 install dnspython
-* pip3 install BeautifulSoup4
+* pip3 install BeautifulSoup4 (On some systems, you need to install this first "sudo apt-get install python-bs4")
 * pip3 install selenium
 
 ## Screenshots:
@@ -37,7 +37,7 @@ I was working on a bigger tool, but I didn't have time to continue it. I will tr
 
 ## Things that might be added in the future:
 * Auto directory/file bruteforce.
-* waybackurls
+* waybackurls.
 * Auto crawler.
 * Auto scanner for different type of vulnerabilities.
 
