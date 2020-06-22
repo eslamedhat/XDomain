@@ -24,6 +24,7 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * pip3 install dnspython
 * pip3 install BeautifulSoup4 (On some systems, you need to install this first "sudo apt-get install python-bs4")
 * pip3 install selenium
+* sudo apt-get install firefox-esr (Only if not installed)
 
 ## Usage:
 ```
