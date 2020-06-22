@@ -15,6 +15,15 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * Nmap scan against every subdomain.
 * Generate a quick HTML report.
 
+## Requirements:
+* apt-get update
+* apt install python3-pip
+* pip3 install builtwith
+* pip3 install python-nmap
+* pip3 install dnspython
+* pip3 install BeautifulSoup4
+* pip3 install selenium
+
 ## Screenshots:
 ![alt text](https://wikihak.com/wp-content/uploads/1.JPG)
 
