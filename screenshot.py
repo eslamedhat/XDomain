@@ -11,7 +11,11 @@ def screenshot(subdomain,domain):
     options = Options()
     options.headless = True
     #options.add_argument( executable_path='tools/geckodriver' )
-    driver = webdriver.Firefox(options=options, executable_path='tools/geckodriver')
+    try:
+        driver = webdriver.Firefox(options=options, executable_path='tools/geckodriver')
+    except:
+        driver = webdriver.Firefox(options=options, executable_path='tools/geckodriver64')
+        
     #driver = webdriver.Firefox( firefox_options=options )
     driver.get(subdomain)
     driver.save_screenshot('Loot/'+domain+'/screenshots/'+clear_url(subdomain)+'.png')
@@ -33,3 +37,4 @@ def take_all_screenshots(domain):
         screenshot(i,domain)
         #time.sleep(10)
 #take_all_screenshots("c2m.net")       
+
