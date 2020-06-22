@@ -1,12 +1,9 @@
 #apt-get update
 #pip3 install python-nmap
-#apt install sqlmap
 #apt install python3-pip
 #apt install golang-go
-#pip3 install python-owasp-zap-v2.4
 #pip3 install builtwith
 #pip3 install dnspython
-#sudo apt-get install gobuster
 #sudo apt install default-jdk
 from builtwith import *
 import nmap, socket
