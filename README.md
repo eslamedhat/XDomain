@@ -1,8 +1,9 @@
 # XDomain
 Auto powerful subdomains scanner - Auto check live subdomains
 The best thing in the life is autmoation. 
-I enjoy coding stuff and I was searching for something to collect subdomains, I found a lot of tools, but I didn't find the automation part.
-I made this tool based on different tools and my own code. XDomain will do the follwoing to get subdomains:
+I enjoy coding stuff and I was searching for something to collect subdomains, I found a lot of tools, but I didn't find the automation part. I made this tool based on different tools and my own code. 
+
+##XDomain will do the follwoing to get subdomains:
 
 * Get subdomains from Amass.
 * Get subdomains from Sublist3r.
@@ -19,7 +20,7 @@ In the conf.py, you will be able to control the used tools and the Nmap ports.
 
 I was working on a bigger tool, but I didn't have time to continue it. I will try to add more stuff in the future. 
 
-Things that might be added in the future:
+##Things that might be added in the future:
 * Auto directory/file bruteforce.
 * waybackurls
 * Auto crawler.
