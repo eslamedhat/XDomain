@@ -2,7 +2,7 @@
 The best thing in the life is autmoation. 
 I enjoy coding stuff and I was searching for something to collect subdomains, I found a lot of tools, but I didn't find the automation part. I made this tool based on different tools and my own code. 
 
-## XDomain will do the follwoing:
+## XDomain will do the following:
 
 * Get subdomains from Amass.
 * Get subdomains from Sublist3r.
