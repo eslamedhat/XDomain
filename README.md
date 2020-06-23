@@ -10,7 +10,7 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * Auto take the founded list of subdomains and find the live targets.
 * Find hidden subdomains in JavaScript files from all the founded subdomains.
 * Remove all duplicates.
-* Take screenshot for every subdomain.
+* Take a screenshot for every subdomain.
 * Find the technology of every subdomain.
 * Nmap scan against every subdomain.
 * Generate a quick HTML report.
