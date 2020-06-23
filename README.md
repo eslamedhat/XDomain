@@ -27,6 +27,8 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * sudo apt-get install firefox-esr (Only if not installed)
 
 ## Usage:
+Note: Don't forge to give executable permissions to all the files in the tools directory.
+
 ```
 cd XDomain
 chmod -R +x tools/
