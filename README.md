@@ -52,3 +52,10 @@ I was working on a bigger tool, but I didn't have time to continue it. I will tr
 * Auto scanner for different type of vulnerabilities.
 
 Please let me know your suggestions. Enjoy! :D 
+
+## Credits:
+* [Sublist3r](https://github.com/aboul3la/Sublist3r/) - Thanks to my friend aboul3la :).
+* [Amass](https://github.com/OWASP/Amass) - Thanks to OWASP.
+* [Subbrute](https://github.com/TheRook/subbrute) - Thanks to TheRook.
+
+
