@@ -7,7 +7,7 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * Get subdomains from Amass.
 * Get subdomains from Sublist3r.
 * Get subdomains from Subbrute.
-* Auto take the founded list of subdomains and find the live targets.
+* Auto take the founded list of subdomains and find the live targets. (The quality of this function is better than httprobe).
 * Find hidden subdomains in JavaScript files from all the founded subdomains.
 * Remove all duplicates.
 * Take a screenshot for every subdomain.
