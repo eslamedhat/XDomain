@@ -1,10 +1,8 @@
 #apt-get update
 #pip3 install python-nmap
 #apt install python3-pip
-#apt install golang-go
 #pip3 install builtwith
 #pip3 install dnspython
-#sudo apt install default-jdk
 from builtwith import *
 import nmap, socket
 import requests, os, shutil, glob, sys, time, csv
@@ -15,6 +13,9 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 import sublist3r,JSFinder, screenshot, reportgen
 from multiprocessing import Process
+import multiprocessing
+import eventlet
+
 CRED = '\033[91m'
 CYELLOW = '\33[33m'
 CEND = '\033[0m'
@@ -69,8 +70,8 @@ def rem_dup1():
         with open('targets.txt', 'w') as uniqtargets:
             uniqtargets.writelines(set(uniqlines))
             
-def live_targets():
-    
+def live_targets(target):
+    #domain= "seek.com.au"
     #global dir_path
     #os.chdir(dir_path)
     from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -85,25 +86,56 @@ def live_targets():
         # no pyopenssl support used / needed / available
         pass
     
-    rem_dup1()
+    try:
+        eventlet.monkey_patch()
+        with eventlet.Timeout(12):
+            httptarget="http://"+target
+            r = requests.get(httptarget, verify=False, timeout=12)
+            print(httptarget + CYELLOW+" is up :)"+CEND)
+            with open("live.txt", "a") as live:
+                parsed_uri = urlparse(httptarget)
+                result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+                live.write(result + "\n")
+
+    except:
+            print(str(target) + " is down!")
+            try:
+                eventlet.monkey_patch()
+                with eventlet.Timeout(12):
+                    target="https://"+target
+                    r = requests.get(target, verify=False, timeout=12)
+                    print(target + CYELLOW+" is up :)"+CEND)
+                    with open("live.txt", "a") as live:
+                        parsed_uri = urlparse(target)
+                        result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+                        live.write(result + "\n")
+            except:
+                pass
+
+    
+    
+def get_live():
+    rem_dup2()
     with open('targets.txt') as t:
         lines = [line.rstrip() for line in t]
         print(CRED+"checking live targets.... (default ports only 80 - 443)"+CEND)
         raw = open("live.txt", "w")
+        def chunks(l, n):
+            for i in range(0, len(l), n):
+                yield l[i:i + n]
+
+        numberOfThreads = 200
+        jobs = []
         for target in lines:
-            target=check_scheme(target)
-            try:
-                r = requests.get(target, verify=False, timeout=5)
-                print(r.url)
-                with open("live.txt", "a") as live:
-                    parsed_uri = urlparse(r.url)
-                    result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-                    if domain in result:
-                        live.write(result + "\n")
-                    else:
-                        print(target+" redirect to "+result+" it will not be added to live.txt ")
-            except:
-                print(str(target) + " is down!")
+            #target=check_scheme(target)
+            p = multiprocessing.Process(target=live_targets, args=(target,))
+            jobs.append(p)
+            #live_targets(target)
+        for i in chunks(jobs,numberOfThreads):
+            for j in i:
+                j.start()
+            for j in i:
+                j.join()
     rem_dup2()
 
 
@@ -205,7 +237,7 @@ def main():
         print(CRED+"Getting subdomains with Sublist3r..."+CEND)
         sublist3r.sublist3r_run(domain,conf.subbrute)
     if conf.live      == True:       
-        live_targets()
+        get_live()
     if conf.JSFinder  == True:
         print(CRED+"Getting subdomains from javascript files from all the live subdomains..."+CEND)
         JSFinder.Js_subdomains()
@@ -217,4 +249,5 @@ def main():
     
 if __name__ == "__main__":
     main()
+
 
