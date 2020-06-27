@@ -5,7 +5,7 @@
 #pip3 install dnspython
 from builtwith import *
 import nmap, socket
-import requests, os, shutil, glob, sys, time, csv
+import requests, os, shutil, glob, sys, time, csv, resource
 from urllib.parse import urlparse
 import urllib.request
 from conf import conf
@@ -15,6 +15,7 @@ import sublist3r,JSFinder, screenshot, reportgen
 from multiprocessing import Process
 import multiprocessing
 import eventlet
+import subprocess
 
 CRED = '\033[91m'
 CYELLOW = '\33[33m'
@@ -96,7 +97,7 @@ def live_targets(target):
                 parsed_uri = urlparse(httptarget)
                 result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
                 live.write(result + "\n")
-
+                
     except:
             print(str(target) + " is down!")
             try:
@@ -111,11 +112,12 @@ def live_targets(target):
                         live.write(result + "\n")
             except:
                 pass
-
-    
     
 def get_live():
     rem_dup2()
+    resource.setrlimit(resource.RLIMIT_NOFILE, (131072, 131072))
+    #print(resource.getrlimit(RLIMIT_MSGQUEUE))
+    time.sleep(10)
     with open('targets.txt') as t:
         lines = [line.rstrip() for line in t]
         print(CRED+"checking live targets.... (default ports only 80 - 443)"+CEND)
@@ -249,5 +251,6 @@ def main():
     
 if __name__ == "__main__":
     main()
+
 
 
