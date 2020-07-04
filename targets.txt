@@ -1,3 +1,0 @@
-owasp_needs_upgrade_failed_to_send_a_nonce.wikihak.com
-www.wikihak.com
-wikihak.com

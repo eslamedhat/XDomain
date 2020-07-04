@@ -5,12 +5,13 @@
 #pip3 install dnspython
 from builtwith import *
 import nmap, socket
-import requests, os, shutil, glob, sys, time, csv, resource
+import requests, os, shutil, glob, sys, time, csv, resource, argparse
 from urllib.parse import urlparse
 import urllib.request
 from conf import conf
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+from tools import altdns
 import sublist3r,JSFinder, screenshot, reportgen
 from multiprocessing import Process
 import multiprocessing
@@ -32,11 +33,18 @@ def banner():
     """)
 
 banner()
+'''
 if len(sys.argv) == 1:
     print("usage: python3 XDomain.py example.com")
     exit()
-domain = sys.argv[1:]
-domain = domain[0]
+'''
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--domain", help="The target domain", required=True)
+args = parser.parse_args()
+
+domain = args.domain    
+#domain = sys.argv[1:]
+#domain = domain[0]
 os.system("mkdir Loot")
 os.system("mkdir Loot/" + str(domain))
 os.system("mkdir Loot/"+domain+"/screenshots")
@@ -44,14 +52,14 @@ os.system("mkdir Loot/"+domain+"/screenshots")
 alldata=[]
 
 
-
+'''
 def gen_csv(x):
     with open('out.csv','a') as f:
         for sublist in x:
             print(sublist)
             f.write(str(sublist) + ',')
         f.write('\n')
-
+'''
 def check_scheme(target):
         target= target.strip()
         target = "http://"+target
@@ -64,6 +72,7 @@ def rem_dup2():
             uniqtargets.writelines(set(uniqlines))
             
 def rem_dup1():
+    os.chdir(dir_path)
     print(os.getcwd())
     print("Removing dupliactes.....")
     with open("targets.txt") as result:
@@ -71,7 +80,7 @@ def rem_dup1():
         with open('targets.txt', 'w') as uniqtargets:
             uniqtargets.writelines(set(uniqlines))
             
-def live_targets(target):
+def live_targets(target,x):
     #domain= "seek.com.au"
     #global dir_path
     #os.chdir(dir_path)
@@ -86,38 +95,40 @@ def live_targets(target):
     except AttributeError:
         # no pyopenssl support used / needed / available
         pass
-    
     try:
         eventlet.monkey_patch()
-        with eventlet.Timeout(12):
-            httptarget="http://"+target
-            r = requests.get(httptarget, verify=False, timeout=12)
-            print(httptarget + CYELLOW+" is up :)"+CEND)
+        with eventlet.Timeout(10):
+            httpstarget="https://"+target
+            r = requests.get(httpstarget, verify=False, timeout=15)
+            print(str(x)+" "+httpstarget + CYELLOW+" is up :)"+CEND)
             with open("live.txt", "a") as live:
-                parsed_uri = urlparse(httptarget)
+                parsed_uri = urlparse(httpstarget)
                 result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
                 live.write(result + "\n")
                 
     except:
-            print(str(target) + " is down!")
             try:
                 eventlet.monkey_patch()
-                with eventlet.Timeout(12):
-                    target="https://"+target
-                    r = requests.get(target, verify=False, timeout=12)
-                    print(target + CYELLOW+" is up :)"+CEND)
+                with eventlet.Timeout(10):
+                    target="http://"+target
+                    r = requests.get(target, verify=False, timeout=15)
+                    print(str(x)+" "+target + CYELLOW+" is up :)"+CEND)
                     with open("live.txt", "a") as live:
                         parsed_uri = urlparse(target)
                         result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
                         live.write(result + "\n")
             except:
-                pass
+                print(str(x)+" "+str(target) + " is down!")
+
     
 def get_live():
-    rem_dup2()
+    rem_dup1()
+    os.chdir(dir_path)
+
     resource.setrlimit(resource.RLIMIT_NOFILE, (131072, 131072))
     #print(resource.getrlimit(RLIMIT_MSGQUEUE))
-    time.sleep(10)
+    time.sleep(3)
+    x=0
     with open('targets.txt') as t:
         lines = [line.rstrip() for line in t]
         print(CRED+"checking live targets.... (default ports only 80 - 443)"+CEND)
@@ -126,11 +137,12 @@ def get_live():
             for i in range(0, len(l), n):
                 yield l[i:i + n]
 
-        numberOfThreads = 200
+        numberOfThreads = 150
         jobs = []
         for target in lines:
+            x =x+1
             #target=check_scheme(target)
-            p = multiprocessing.Process(target=live_targets, args=(target,))
+            p = multiprocessing.Process(target=live_targets, args=(target,x,))
             jobs.append(p)
             #live_targets(target)
         for i in chunks(jobs,numberOfThreads):
@@ -158,13 +170,46 @@ def clear_url(x):# to make a folder with the domain name
 
 
 def amass_scan():
-    #global dir_path
-    #os.chdir(dir_path)
+    global dir_path
+    os.chdir(dir_path)
     print(CRED+"Getting subdomains with Amass..."+CEND)
     os.system("./tools/amass enum -passive -d "+domain+" -o targets.txt")
 
 
+def securitytrails(domain):
+    print(CRED+"Getting subdomains from SecurityTrails..."+CEND)
+    url = "https://api.securitytrails.com/v1/domain/"+domain+"/subdomains"
+
+    querystring = {"children_only":"false"}
+    
+    headers = {'accept': 'application/json', 'apikey': conf.securitytrailsAPI}
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    #print(response.text)
+    json_data = response.json() if response and response.status_code == 200 else None
+    if json_data and 'subdomains' in json_data:
+        for sub in json_data['subdomains']:
+            print(sub+"."+domain)
+            with open("targets.txt", "a") as t:
+                t.write(sub+"."+domain+ "\n")
+            #print(sub+"."+domain)
+    else:
+        print("Please make sure that you added the api key for SecurityTrails")
+        time.sleep(2)
+
+
+def altdns_generate():
+    print(CRED+"Generating subdomains via altdns..."+CEND)
+    altdns.main()
+    os.chdir(dir_path)
+    with open('altdns.txt') as subdomains:
+        with open("targets.txt", "a") as t:
+            for i in subdomains:
+                t.write(i)
+    os.system("rm altdns.txt")
+    
 def smart_scan():
+    os.chdir(dir_path)
     global alldata
     global domain
     #all_subs=[]
@@ -232,12 +277,16 @@ def smart_scan():
 
 
 def main():
-
+    
     if conf.amass     == True:
         amass_scan()
     if conf.sublist3r == True:
         print(CRED+"Getting subdomains with Sublist3r..."+CEND)
         sublist3r.sublist3r_run(domain,conf.subbrute)
+    if conf.sectrails == True:
+        securitytrails(domain)
+    if conf.altdns    == True:
+        altdns_generate()
     if conf.live      == True:       
         get_live()
     if conf.JSFinder  == True:
@@ -250,6 +299,7 @@ def main():
     
     
 if __name__ == "__main__":
+    #altdns.main()
     main()
 
 

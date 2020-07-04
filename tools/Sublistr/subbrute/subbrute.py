@@ -404,7 +404,7 @@ def extract_subdomains(file_name):
     subs_sorted = sorted(subs.keys(), key = lambda x: subs[x], reverse = True)
     return subs_sorted
 
-def print_target(target, record_type = None, subdomains = "names.txt", resolve_list = "resolvers.txt", process_count = 16, output = False, json_output = False, found_subdomains=[],verbose=False):
+def print_target(target, record_type = None, subdomains = "names.txt", resolve_list = "resolvers.txt", process_count = 16, output = False, json_output = False, found_subdomains=[],verbose=True):
     subdomains_list = []
     results_temp = []
     run(target, record_type, subdomains, resolve_list, process_count)
@@ -512,7 +512,7 @@ def killproc(signum = 0, frame = 0, pid = False):
         os.kill(pid, 9)
 
 #Toggle debug output
-verbose = False
+verbose = True
 def trace(*args, **kwargs):
     if verbose:
         for a in args:
@@ -572,11 +572,11 @@ if __name__ == "__main__":
     parser.add_option("--type", dest = "type", default = False,
               type = "string", help = "(optional) Print all reponses for an arbitrary DNS record type (CNAME, AAAA, TXT, SOA, MX...)")                  
     parser.add_option("-c", "--process_count", dest = "process_count",
-              default = 16, type = "int",
+              default = 100, type = "int",
               help = "(optional) Number of lookup theads to run. default = 16")
     parser.add_option("-f", "--filter_subs", dest = "filter", default = "",
               type = "string", help = "(optional) A file containing unorganized domain names which will be filtered into a list of subdomains sorted by frequency.  This was used to build names.txt.")                 
-    parser.add_option("-v", "--verbose", action = 'store_true', dest = "verbose", default = False,
+    parser.add_option("-v", "--verbose", action = 'store_true', dest = "verbose", default = True,
               help = "(optional) Print debug information.")
     (options, args) = parser.parse_args()
 

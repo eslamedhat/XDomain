@@ -10,7 +10,8 @@ def sublist3r_run(domain,subbrute):
         with open("targets.txt", "a") as t:
             for i in subdomains:
                 t.write(i)
-
+    os.system("rm subdomains.txt")
+    
 def main():
     sublist3r_run("example.com")      
 
