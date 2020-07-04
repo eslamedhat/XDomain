@@ -2,6 +2,8 @@
 The best thing in life is automation.
 I enjoy coding stuff and I was searching for something to collect subdomains, I found a lot of tools, but I didn't find the automation part. I made this tool based on different tools and my own code. 
 
+![alt text](https://wikihak.com/wp-content/uploads/XDomain-workflow.svg)
+
 ## XDomain will do the following:
 
 * Get subdomains from Amass.
