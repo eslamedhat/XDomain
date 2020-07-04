@@ -7,6 +7,8 @@ I enjoy coding stuff and I was searching for something to collect subdomains, I 
 * Get subdomains from Amass.
 * Get subdomains from Sublist3r.
 * Get subdomains from Subbrute.
+* Get subdomains from SecurityTrails API (You need to add the API key in the config file).
+* Generate subdomains via altdns.
 * Auto take the founded list of subdomains and find the live targets. (The quality of this function is better than httprobe).
 * Find hidden subdomains in JavaScript files from all the founded subdomains.
 * Remove all duplicates.
@@ -33,7 +35,7 @@ Note: Don't forge to give executable permissions to all the files in the tools d
 ```
 cd XDomain
 chmod -R +x tools/
-python3 XDomain.py wikihak.com
+python3 XDomain.py -d wikihak.com
 ```
 ## Screenshots:
 ![alt text](https://wikihak.com/wp-content/uploads/1.JPG)
