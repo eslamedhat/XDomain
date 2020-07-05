@@ -3,8 +3,8 @@ class conf:
     amass    =True # Get subdomains via Amass
     sublist3r=True # Get subdomains via Sublist3r
     sectrails=True  # Get subdomains from SecurityTrails API
-    subbrute =True # Bruteforce subdomains via Subbrute   
-    altdns   =True # Generate subdomains via altdns   
+    subbrute =False # Bruteforce subdomains via Subbrute   
+    altdns   =False # Generate subdomains via altdns   
     live     =True  # Check the all the collected subdomains in "targets.txt" then add the live subdomains in "live.txt"
     JSFinder =True # Find subdomains in javascript files from all the live subdomains and append them with "live.txt"
     smartscan=True # Screenshot, Detect technology, Nmap scan, and generate a report
